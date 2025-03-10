@@ -1,28 +1,94 @@
-name: Build and Deploy Java app
+name: DTAP Pipeline for Java
 
-on: 
-  push: 
+on:
+  push:
     branches:
-    - main
+      - develop
+      - test
+      - acceptance
+      - main
 
 jobs:
-  build-deploy:
-    name: Build and deploy Java app for beginners
+  development:
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
-      - name: Setup JDK 17
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'corretto'
-          java-version: 17
-      
-      - name: Unit Test
-        run: mvn -B test --file pom.xml //test.xml??
+          distribution: 'temurin'
+          java-version: '17'
 
-      - name: Build an app
+      - name: Build with Maven
+        run: mvn clean package  
+
+      - name: Run unit tests
+        run: mvn test
+
+  testing:
+    if: github.ref == 'refs/heads/test'
+    needs: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Run integration tests
+        run: mvn verify
+
+  acceptance:
+    if: github.ref == 'refs/heads/acceptance'
+    needs: testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Deploy to Staging (UAT)
+        env:
+          STAGING_SERVER: ${{ secrets.STAGING_SERVER }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_PASS: ${{ secrets.STAGING_PASS }}
         run: |
-          mvn clean
-          mvn -B package --file pomp,xml //which file ? 
+          echo "Deploying to Staging..."
+          scp target/*.jar $STAGING_USER@$STAGING_SERVER:/var/www/staging
+          ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/*.jar"
+
+  production:
+    if: github.ref == 'refs/heads/main'
+    needs: acceptance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Deploy to Production
+        env:
+          PROD_SERVER: ${{ secrets.PROD_SERVER }}
+          PROD_USER: ${{ secrets.PROD_USER }}
+          PROD_PASS: ${{ secrets.PROD_PASS }}
+        run: |
+          echo "Deploying to Production..."
+          scp target/*.jar $PROD_USER@$PROD_SERVER:/var/www/production
+          ssh $PROD_USER@$PROD_SERVER "java -jar /var/www/production/*.jar"
