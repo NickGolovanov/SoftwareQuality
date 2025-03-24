@@ -1,7 +1,7 @@
-package nhl.stenden.comand.buttons;
+package nhl.stenden.command.buttons;
 
-import nhl.stenden.comand.Command;
-import nhl.stenden.comand.Receiver;
+import nhl.stenden.command.Command;
+import nhl.stenden.command.Receiver;
 
 public class Previous implements Command
 {
@@ -12,10 +12,6 @@ public class Previous implements Command
         this.receiver = receiver;
     }
 
-
-    /**
-     *
-     */
     @Override
     public void execute()
     {

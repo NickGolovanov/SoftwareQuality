@@ -1,9 +1,8 @@
-package nhl.stenden.comand;
+package nhl.stenden.command;
 
 import nhl.stenden.Presentation;
 import nhl.stenden.factorymethod.Accessor;
 import nhl.stenden.factorymethod.AccessorCreator;
-import nhl.stenden.factorymethod.XMLAccessor;
 import nhl.stenden.factorymethod.XMLAccessorCreator;
 
 import javax.swing.*;
@@ -53,14 +52,16 @@ public class Receiver
         presentation.clear();
         AccessorCreator xmlAccessorCreator = new XMLAccessorCreator();
         Accessor xmlAccessor = xmlAccessorCreator.getAccessor();
-        try {
+        try
+        {
             xmlAccessor.loadFile(presentation, TESTFILE);
             presentation.setSlideNumber(0);
-        } catch (IOException exc) {
+        } catch (IOException exc)
+        {
             JOptionPane.showMessageDialog(parent, IOEX + exc,
                     LOADERR, JOptionPane.ERROR_MESSAGE);
         }
-       parent.repaint();
+        parent.repaint();
     }
 
     public void nextSlide()
@@ -78,19 +79,15 @@ public class Receiver
         this.presentation.setSlideNumber(slideNumber);
     }
 
-    public void newPresentation()
-    {
-        presentation.clear();
-        parent.repaint();
-    }
-
     public void save()
     {
         AccessorCreator xmlAccessorCreator = new XMLAccessorCreator();
         Accessor xmlAccessor = xmlAccessorCreator.getAccessor();
-        try {
+        try
+        {
             xmlAccessor.saveFile(presentation, SAVEFILE);
-        } catch (IOException exc) {
+        } catch (IOException exc)
+        {
             JOptionPane.showMessageDialog(parent, IOEX + exc,
                     SAVEERR, JOptionPane.ERROR_MESSAGE);
         }

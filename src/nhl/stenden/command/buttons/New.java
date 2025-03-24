@@ -1,14 +1,10 @@
-package nhl.stenden.comand.buttons;
+package nhl.stenden.command.buttons;
 
-import nhl.stenden.comand.Command;
-import nhl.stenden.comand.Receiver;
+import nhl.stenden.command.Command;
+import nhl.stenden.command.Receiver;
 
 public class New implements Command
 {
-    /**
-     *
-     */
-
     private Receiver receiver;
 
     public New(Receiver receiver)

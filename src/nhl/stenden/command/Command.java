@@ -1,4 +1,4 @@
-package nhl.stenden.comand;
+package nhl.stenden.command;
 
 public interface Command
 {

@@ -1,12 +1,12 @@
-package nhl.stenden.comand.buttons;
+package nhl.stenden.command.buttons;
 
 import nhl.stenden.AboutBox;
-import nhl.stenden.comand.Command;
-import nhl.stenden.comand.Receiver;
+import nhl.stenden.command.Command;
+import nhl.stenden.command.Receiver;
 
 public class About implements Command
 {
-    Receiver receiver;
+    private Receiver receiver;
 
     public About(Receiver receiver)
     {
@@ -16,6 +16,6 @@ public class About implements Command
     @Override
     public void execute()
     {
-        AboutBox.show(receiver.getParent());
+        AboutBox.show(this.receiver.getParent());
     }
 }

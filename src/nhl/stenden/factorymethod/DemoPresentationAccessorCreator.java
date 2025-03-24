@@ -1,6 +1,6 @@
 package nhl.stenden.factorymethod;
 
-public class DemoPresentationAccessorCrator extends AccessorCreator
+public class DemoPresentationAccessorCreator extends AccessorCreator
 {
     @Override
     public Accessor create()
