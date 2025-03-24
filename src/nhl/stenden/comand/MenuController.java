@@ -2,10 +2,7 @@ package nhl.stenden.comand;
 
 import nhl.stenden.AboutBox;
 import nhl.stenden.Presentation;
-import nhl.stenden.comand.buttons.GoTo;
-import nhl.stenden.comand.buttons.Next;
-import nhl.stenden.comand.buttons.Open;
-import nhl.stenden.comand.buttons.Previous;
+import nhl.stenden.comand.buttons.*;
 import nhl.stenden.factorymethod.Accessor;
 import nhl.stenden.factorymethod.XMLAccessor;
 
@@ -58,44 +55,28 @@ public class MenuController extends MenuBar {
 				Comand openComand = new Open(receiver, TESTFILE);
 				openComand.execute();
 				parent.repaint();
-
-//				Open openComand = new Open()
-//				presentation.clear();
-//				Accessor xmlAccessor = new XMLAccessor();
-//				try {
-//					xmlAccessor.loadFile(presentation, TESTFILE);
-//					presentation.setSlideNumber(0);
-//				} catch (IOException exc) {
-//					JOptionPane.showMessageDialog(parent, IOEX + exc,
-//         			LOADERR, JOptionPane.ERROR_MESSAGE);
-//				}
-//				parent.repaint();
 			}
 		} );
 		fileMenu.add(menuItem = mkMenuItem(NEW.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.clear();
-				parent.repaint();
+				Save save = new Save(receiver);
+				save.execute();
 			}
 		});
 		fileMenu.add(menuItem = mkMenuItem(SAVE.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Accessor xmlAccessor = new XMLAccessor();
-				try {
-					xmlAccessor.saveFile(presentation, SAVEFILE);
-				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc,
-							SAVEERR, JOptionPane.ERROR_MESSAGE);
-				}
+				Save save = new Save(receiver);
+				save.execute();
 			}
 		});
 		fileMenu.addSeparator();
 		fileMenu.add(menuItem = mkMenuItem(EXIT.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.exit(0);
+				Exit exit = new Exit(receiver);
+				exit.execute();
 			}
 		});
 		add(fileMenu);
@@ -122,11 +103,11 @@ public class MenuController extends MenuBar {
 			}
 		});
 		add(viewMenu);
-		Menu helpMenu = new Menu(HELP);
-		helpMenu.add(menuItem = mkMenuItem(ABOUT));
+		Menu helpMenu = new Menu(HELP.getButtonName());
+		helpMenu.add(menuItem = mkMenuItem(ABOUT.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				AboutBox.show(parent);
+				AboutBox.show(parent); /// how to implement in this case ?
 			}
 		});
 		setHelpMenu(helpMenu);		// needed for portability (Motif, etc.).

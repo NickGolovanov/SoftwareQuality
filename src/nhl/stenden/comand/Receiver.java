@@ -57,4 +57,26 @@ public class Receiver
         this.presentation.setSlideNumber(slideNumber);
     }
 
+    public void newPresentation()
+    {
+        presentation.clear();
+        parent.repaint();
+    }
+
+    public void save()
+    {
+        AccessorCreator xmlAccessorCreator = new XMLAccessorCreator();
+        Accessor xmlAccessor = xmlAccessorCreator.getAccessor();
+        try {
+            xmlAccessor.saveFile(presentation, SAVEFILE);
+        } catch (IOException exc) {
+            JOptionPane.showMessageDialog(parent, IOEX + exc,
+                    SAVEERR, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void exit(int i)
+    {
+        this.presentation.exit(i);
+    }
 }
