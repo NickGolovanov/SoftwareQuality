@@ -1,3 +1,5 @@
+package nhl.stenden.factorymethod;
+
 import java.util.Vector;
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import nhl.stenden.*;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,7 +28,8 @@ import org.w3c.dom.NodeList;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class XMLAccessor extends Accessor {
+public class XMLAccessor extends Accessor
+{
 	
     /** Default API to use. */
     protected static final String DEFAULT_API_TO_USE = "dom";

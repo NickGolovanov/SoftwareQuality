@@ -1,3 +1,8 @@
+package nhl.stenden;
+
+import nhl.stenden.factorymethod.Accessor;
+import nhl.stenden.factorymethod.XMLAccessor;
+
 import java.awt.MenuBar;
 import java.awt.Frame;
 import java.awt.Menu;

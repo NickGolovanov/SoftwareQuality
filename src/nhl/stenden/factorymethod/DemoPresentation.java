@@ -1,3 +1,9 @@
+package nhl.stenden.factorymethod;
+
+import nhl.stenden.BitmapItem;
+import nhl.stenden.Presentation;
+import nhl.stenden.Slide;
+
 /** A built in demo-presentation
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
  * @version 1.1 2002/12/17 Gert Florijn
@@ -8,7 +14,8 @@
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-class DemoPresentation extends Accessor {
+class DemoPresentation extends Accessor
+{
 
 	public void loadFile(Presentation presentation, String unusedFilename) {
 		presentation.setTitle("Demo Presentation");

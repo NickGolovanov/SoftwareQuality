@@ -1,3 +1,7 @@
+package nhl.stenden;
+
+import nhl.stenden.factorymethod.*;
+
 import javax.swing.JOptionPane;
 
 import java.io.IOException;
@@ -29,9 +33,13 @@ public class JabberPoint {
 		new SlideViewerFrame(JABVERSION, presentation);
 		try {
 			if (argv.length == 0) { // een demo presentatie
-				Accessor.getDemoAccessor().loadFile(presentation, "");
+				AccessorCreator DemopresentationAccaesCreator = new DemoPresentationAccessorCrator();
+				Accessor DemoPresentation = DemopresentationAccaesCreator.getAccessor();
+				DemoPresentation.loadFile(presentation, "");
 			} else {
-				new XMLAccessor().loadFile(presentation, argv[0]);
+				AccessorCreator XMLAccessorCreator = new XMLAccessorCreator();
+				Accessor XMLAccessor = XMLAccessorCreator.getAccessor();
+				XMLAccessor.loadFile(presentation, argv[0]);
 			}
 			presentation.setSlideNumber(0);
 		} catch (IOException ex) {

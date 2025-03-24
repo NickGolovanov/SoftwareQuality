@@ -1,3 +1,5 @@
+package nhl.stenden;
+
 import java.util.ArrayList;
 
 

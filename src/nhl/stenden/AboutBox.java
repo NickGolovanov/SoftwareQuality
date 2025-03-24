@@ -1,3 +1,5 @@
+package nhl.stenden;
+
 import java.awt.Frame;
 import javax.swing.JOptionPane;
 
