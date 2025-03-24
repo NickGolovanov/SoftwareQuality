@@ -1,4 +1,6 @@
-package nhl.stenden;
+package nhl.stenden.comand;
+
+import nhl.stenden.Presentation;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
