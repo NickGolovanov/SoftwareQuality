@@ -1,6 +1,8 @@
 package nhl.stenden.comand;
 
 import nhl.stenden.Presentation;
+import nhl.stenden.comand.buttons.Next;
+import nhl.stenden.comand.buttons.Previous;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
@@ -16,11 +18,8 @@ import java.awt.event.KeyAdapter;
 */
 
 public class KeyController extends KeyAdapter {
-	private Presentation presentation; // Commands are given to the presentation
 
-	public KeyController(Presentation p) {
-		presentation = p;
-	}
+	private Receiver receiver;
 
 	public void keyPressed(KeyEvent keyEvent) {
 		switch(keyEvent.getKeyCode()) {
@@ -28,12 +27,14 @@ public class KeyController extends KeyAdapter {
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_ENTER:
 			case '+':
-				presentation.nextSlide();
+				Next next = new Next(receiver);
+				next.execute();
 				break;
 			case KeyEvent.VK_PAGE_UP:
 			case KeyEvent.VK_UP:
 			case '-':
-				presentation.prevSlide();
+				Previous previous = new Previous(receiver);
+				previous.execute();
 				break;
 			case 'q':
 			case 'Q':
