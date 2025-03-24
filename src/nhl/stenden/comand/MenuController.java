@@ -1,10 +1,7 @@
 package nhl.stenden.comand;
 
-import nhl.stenden.AboutBox;
 import nhl.stenden.Presentation;
 import nhl.stenden.comand.buttons.*;
-import nhl.stenden.factorymethod.Accessor;
-import nhl.stenden.factorymethod.XMLAccessor;
 
 import java.awt.MenuBar;
 import java.awt.Frame;
@@ -13,11 +10,6 @@ import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
-
-import static nhl.stenden.comand.GlobalVariable.
 
 /** <p>The controller for the menu</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -28,7 +20,7 @@ import static nhl.stenden.comand.GlobalVariable.
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
-public class MenuController extends MenuBar {
+	public class MenuController extends MenuBar {
 	
 	private Frame parent; // the frame, only used as parent for the Dialogs
 	private Presentation presentation; // Commands are given to the presentation
@@ -48,23 +40,25 @@ public class MenuController extends MenuBar {
 		parent = frame;
 		presentation = pres;
 		MenuItem menuItem;
-		Menu fileMenu = new Menu(FILE.getButtonName());
-		fileMenu.add(menuItem = mkMenuItem(OPEN.getButtonName()));
+
+		this.receiver = new Receiver(presentation);
+
+		Menu fileMenu = new Menu(GlobalVariable.FILE.getButtonName());
+		fileMenu.add(menuItem = mkMenuItem(GlobalVariable.OPEN.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				Comand openComand = new Open(receiver, TESTFILE);
-				openComand.execute();
-				parent.repaint();
+				Command openCommand = new Open(receiver, TESTFILE);
+				openCommand.execute();
 			}
 		} );
-		fileMenu.add(menuItem = mkMenuItem(NEW.getButtonName()));
+		fileMenu.add(menuItem = mkMenuItem(GlobalVariable.NEW.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				Save save = new Save(receiver);
 				save.execute();
 			}
 		});
-		fileMenu.add(menuItem = mkMenuItem(SAVE.getButtonName()));
+		fileMenu.add(menuItem = mkMenuItem(GlobalVariable.SAVE.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Save save = new Save(receiver);
@@ -72,7 +66,7 @@ public class MenuController extends MenuBar {
 			}
 		});
 		fileMenu.addSeparator();
-		fileMenu.add(menuItem = mkMenuItem(EXIT.getButtonName()));
+		fileMenu.add(menuItem = mkMenuItem(GlobalVariable.EXIT.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				Exit exit = new Exit(receiver);
@@ -80,22 +74,22 @@ public class MenuController extends MenuBar {
 			}
 		});
 		add(fileMenu);
-		Menu viewMenu = new Menu(VIEW.getButtonName());
-		viewMenu.add(menuItem = mkMenuItem(NEXT.getButtonName()));
+		Menu viewMenu = new Menu(GlobalVariable.VIEW.getButtonName());
+		viewMenu.add(menuItem = mkMenuItem(GlobalVariable.NEXT.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				Next nextCommand = new Next(receiver);
 				nextCommand.execute();
 			}
 		});
-		viewMenu.add(menuItem = mkMenuItem(PREV.getButtonName()));
+		viewMenu.add(menuItem = mkMenuItem(GlobalVariable.PREV.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				Previous previous = new Previous(receiver);
 				previous.execute();
 			}
 		});
-		viewMenu.add(menuItem = mkMenuItem(GOTO.getButtonName()));
+		viewMenu.add(menuItem = mkMenuItem(GlobalVariable.GOTO.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				GoTo goTo = new GoTo(receiver);
@@ -103,11 +97,12 @@ public class MenuController extends MenuBar {
 			}
 		});
 		add(viewMenu);
-		Menu helpMenu = new Menu(HELP.getButtonName());
-		helpMenu.add(menuItem = mkMenuItem(ABOUT.getButtonName()));
+		Menu helpMenu = new Menu(GlobalVariable.HELP.getButtonName());
+		helpMenu.add(menuItem = mkMenuItem(GlobalVariable.ABOUT.getButtonName()));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				AboutBox.show(parent); /// how to implement in this case ?
+				Command aboutBox = new About(receiver);
+				aboutBox.execute();
 			}
 		});
 		setHelpMenu(helpMenu);		// needed for portability (Motif, etc.).

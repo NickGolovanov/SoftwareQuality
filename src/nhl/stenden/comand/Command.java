@@ -1,6 +1,6 @@
 package nhl.stenden.comand;
 
-public interface Comand
+public interface Command
 {
     void execute();
 }

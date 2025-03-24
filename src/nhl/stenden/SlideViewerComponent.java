@@ -72,4 +72,8 @@ public class SlideViewerComponent extends JComponent {
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
 		slide.draw(g, area, this);
 	}
+
+	public JFrame getFrame() {
+		return this.frame;
+	}
 }

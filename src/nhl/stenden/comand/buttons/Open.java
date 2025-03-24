@@ -1,9 +1,9 @@
 package nhl.stenden.comand.buttons;
 
-import nhl.stenden.comand.Comand;
+import nhl.stenden.comand.Command;
 import nhl.stenden.comand.Receiver;
 
-public class Open  implements Comand
+public class Open  implements Command
 {
     /**
      *

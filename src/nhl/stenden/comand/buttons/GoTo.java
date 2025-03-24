@@ -1,6 +1,6 @@
 package nhl.stenden.comand.buttons;
 
-import nhl.stenden.comand.Comand;
+import nhl.stenden.comand.Command;
 import nhl.stenden.comand.Receiver;
 
 import javax.swing.*;
@@ -8,7 +8,7 @@ import javax.swing.*;
 import static nhl.stenden.comand.GlobalVariable.PAGENR;
 
 
-public class GoTo implements Comand
+public class GoTo implements Command
 {
     private Receiver receiver;
 

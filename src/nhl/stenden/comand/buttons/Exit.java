@@ -1,11 +1,9 @@
 package nhl.stenden.comand.buttons;
 
-import nhl.stenden.comand.Comand;
+import nhl.stenden.comand.Command;
 import nhl.stenden.comand.Receiver;
 
-import java.rmi.server.RemoteRef;
-
-public class Exit implements Comand
+public class Exit implements Command
 {
 
     /**

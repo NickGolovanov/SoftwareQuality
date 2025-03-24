@@ -1,6 +1,7 @@
 package nhl.stenden.comand;
 
 import nhl.stenden.Presentation;
+import nhl.stenden.comand.buttons.Exit;
 import nhl.stenden.comand.buttons.Next;
 import nhl.stenden.comand.buttons.Previous;
 
@@ -23,6 +24,7 @@ public class KeyController extends KeyAdapter {
 
 	public KeyController(Presentation p) {
 		presentation = p;
+		this.receiver = new Receiver(presentation);
 	}
 
 	public void keyPressed(KeyEvent keyEvent) {
@@ -42,7 +44,8 @@ public class KeyController extends KeyAdapter {
 				break;
 			case 'q':
 			case 'Q':
-				System.exit(0);
+				Exit exit = new Exit(receiver);
+				exit.execute();
 				break; // Probably never reached!!
 			default:
 				break;
