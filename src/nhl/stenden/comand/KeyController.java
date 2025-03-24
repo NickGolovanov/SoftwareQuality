@@ -18,8 +18,12 @@ import java.awt.event.KeyAdapter;
 */
 
 public class KeyController extends KeyAdapter {
-
+	private Presentation presentation; // Commands are given to the presentation
 	private Receiver receiver;
+
+	public KeyController(Presentation p) {
+		presentation = p;
+	}
 
 	public void keyPressed(KeyEvent keyEvent) {
 		switch(keyEvent.getKeyCode()) {
