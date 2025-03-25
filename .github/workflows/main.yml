@@ -62,15 +62,31 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Build with Maven
+        run: mvn clean package
+
       - name: Deploy to Staging (UAT)
         env:
           STAGING_SERVER: ${{ secrets.STAGING_SERVER }}
           STAGING_USER: ${{ secrets.STAGING_USER }}
           STAGING_PASS: ${{ secrets.STAGING_PASS }}
         run: |
-          echo "Deploying to Staging..."
-          scp target/*.jar $STAGING_USER@$STAGING_SERVER:/var/www/staging
-          ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/*.jar"
+          # Install sshpass for password-based SSH
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+          # Disable host key checking
+          mkdir -p ~/.ssh
+          echo "Host *" >> ~/.ssh/config
+          echo "    StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "    UserKnownHostsFile /dev/null" >> ~/.ssh/config
+
+          # Find the JAR file
+          JAR_FILE=$(ls target/*.jar)
+          
+          # Deploy using sshpass
+          sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging
+          sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/*.jar"
 
   # Production Phase (Push Docker Image)
   production:
