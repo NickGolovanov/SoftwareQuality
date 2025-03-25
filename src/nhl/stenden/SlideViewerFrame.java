@@ -2,6 +2,8 @@ package nhl.stenden;
 
 import nhl.stenden.command.KeyController;
 import nhl.stenden.command.MenuController;
+import nhl.stenden.observer.Presentation;
+import nhl.stenden.observer.SlideViewerComponent;
 
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
@@ -27,7 +29,8 @@ public class SlideViewerFrame extends JFrame
     {
         super(title);
         SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, this);
-        presentation.setShowView(slideViewerComponent);
+        presentation.setParent(this);
+        presentation.subscribe(slideViewerComponent);
         this.setupWindow(slideViewerComponent, presentation);
     }
 

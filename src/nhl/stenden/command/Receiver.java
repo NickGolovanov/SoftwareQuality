@@ -1,6 +1,6 @@
 package nhl.stenden.command;
 
-import nhl.stenden.Presentation;
+import nhl.stenden.observer.Presentation;
 import nhl.stenden.factorymethod.Accessor;
 import nhl.stenden.factorymethod.AccessorCreator;
 import nhl.stenden.factorymethod.XMLAccessorCreator;
@@ -24,7 +24,7 @@ public class Receiver
     public Receiver(Presentation presentation)
     {
         this.presentation = presentation;
-        this.parent = presentation.getShowView().getFrame();
+        this.parent = presentation.getParent();
     }
 
     public Presentation getPresentation()

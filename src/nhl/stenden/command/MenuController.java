@@ -1,6 +1,6 @@
 package nhl.stenden.command;
 
-import nhl.stenden.Presentation;
+import nhl.stenden.observer.Presentation;
 import nhl.stenden.command.buttons.*;
 
 import java.awt.*;

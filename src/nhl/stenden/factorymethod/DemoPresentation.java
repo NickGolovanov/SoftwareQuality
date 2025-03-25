@@ -1,7 +1,7 @@
 package nhl.stenden.factorymethod;
 
 import nhl.stenden.BitmapItem;
-import nhl.stenden.Presentation;
+import nhl.stenden.observer.Presentation;
 import nhl.stenden.Slide;
 
 /**

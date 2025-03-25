@@ -1,6 +1,7 @@
 package nhl.stenden;
 
 import nhl.stenden.factorymethod.*;
+import nhl.stenden.observer.Presentation;
 
 import javax.swing.JOptionPane;
 

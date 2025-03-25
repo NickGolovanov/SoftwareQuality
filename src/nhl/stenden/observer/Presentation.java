@@ -1,6 +1,10 @@
-package nhl.stenden;
+package nhl.stenden.observer;
 
+import nhl.stenden.Slide;
+
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -14,45 +18,45 @@ import java.util.ArrayList;
 public class Presentation
 {
     private String showTitle; // title of the presentation
-    private ArrayList<Slide> showList = null; // an ArrayList with Slides
+    private List<Slide> slides = new ArrayList<>(); // an ArrayList with Slides
     private int currentSlideNumber = 0; // the slidenummer of the current Slide
-    private SlideViewerComponent slideViewComponent = null; // the viewcomponent of the Slides
+    private Frame parent = null;// the viewcomponent of the Slides
+    private List<Observer> observers = new ArrayList<>();
 
     public Presentation()
     {
-        slideViewComponent = null;
         clear();
     }
 
-    public Presentation(SlideViewerComponent slideViewerComponent)
+    public Presentation(Frame parent)
     {
-        this.slideViewComponent = slideViewerComponent;
+        this.parent = parent;
         clear();
     }
 
     public int getSize()
     {
-        return showList.size();
+        return this.slides.size();
     }
 
     public String getTitle()
     {
-        return showTitle;
+        return this.showTitle;
     }
 
-    public void setTitle(String nt)
+    public void setTitle(String showTitle)
     {
-        showTitle = nt;
+        this.showTitle = showTitle;
     }
 
-    public SlideViewerComponent getShowView()
+    public Frame getParent()
     {
-        return this.slideViewComponent;
+        return this.parent;
     }
 
-    public void setShowView(SlideViewerComponent slideViewerComponent)
+    public void setParent(Frame parent)
     {
-        this.slideViewComponent = slideViewerComponent;
+        this.parent = parent;
     }
 
     // give the number of the current slide
@@ -64,62 +68,78 @@ public class Presentation
     // change the current slide number and signal it to the window
     public void setSlideNumber(int number)
     {
-        currentSlideNumber = number;
-        if (slideViewComponent != null)
-        {
-            slideViewComponent.update(this, getCurrentSlide());
-        }
+        this.currentSlideNumber = number;
+
+        this.notifyObservers();
     }
 
     // go to the previous slide unless your at the beginning of the presentation
     public void prevSlide()
     {
-        if (currentSlideNumber > 0)
+        if (this.currentSlideNumber > 0)
         {
-            setSlideNumber(currentSlideNumber - 1);
+            this.setSlideNumber(this.currentSlideNumber - 1);
         }
     }
 
     // go to the next slide unless your at the end of the presentation.
     public void nextSlide()
     {
-        if (currentSlideNumber < (showList.size() - 1))
+        if (this.currentSlideNumber < (this.getSize() - 1))
         {
-            setSlideNumber(currentSlideNumber + 1);
+            this.setSlideNumber(currentSlideNumber + 1);
         }
     }
 
     // Delete the presentation to be ready for the next one.
     public void clear()
     {
-        showList = new ArrayList<Slide>();
+        this.slides = new ArrayList<Slide>();
         setSlideNumber(-1);
     }
 
     // Add a slide to the presentation
     public void append(Slide slide)
     {
-        showList.add(slide);
+        this.slides.add(slide);
     }
 
     // Get a slide with a certain slidenumber
     public Slide getSlide(int number)
     {
-        if (number < 0 || number >= getSize())
+        if (number < 0 || number >= this.getSize())
         {
             return null;
         }
-        return (Slide) showList.get(number);
+        return this.slides.get(number);
     }
 
     // Give the current slide
     public Slide getCurrentSlide()
     {
-        return getSlide(currentSlideNumber);
+        return this.getSlide(this.currentSlideNumber);
     }
 
     public void exit(int n)
     {
         System.exit(n);
+    }
+
+    public void subscribe(Observer observer)
+    {
+        this.observers.add(observer);
+    }
+
+    public void unsubscribe(Observer observer)
+    {
+        this.observers.remove(observer);
+    }
+
+    public void notifyObservers()
+    {
+        for (Observer observer : this.observers)
+        {
+            observer.update(this.getCurrentSlide());
+        }
     }
 }

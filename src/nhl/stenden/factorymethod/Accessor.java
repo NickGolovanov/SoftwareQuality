@@ -1,6 +1,6 @@
 package nhl.stenden.factorymethod;
 
-import nhl.stenden.Presentation;
+import nhl.stenden.observer.Presentation;
 
 import java.io.IOException;
 

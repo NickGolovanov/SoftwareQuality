@@ -1,4 +1,6 @@
-package nhl.stenden;
+package nhl.stenden.observer;
+
+import nhl.stenden.Slide;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,11 +18,11 @@ import javax.swing.JFrame;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class SlideViewerComponent extends JComponent
+public class SlideViewerComponent extends JComponent implements Observer
 {
-    private Slide currentSlide; 
-    private Font labelFont; 
-    private Presentation presentation; 
+    private Slide currentSlide;
+    private Font labelFont;
+    private Presentation presentation;
     private JFrame frame;
 
     private static final long serialVersionUID = 227L;
@@ -41,19 +43,24 @@ public class SlideViewerComponent extends JComponent
         this.frame = frame;
     }
 
+    public JFrame getFrame()
+    {
+        return this.frame;
+    }
+
     public Dimension getPreferredSize()
     {
         return new Dimension(Slide.WIDTH, Slide.HEIGHT);
     }
 
-    public void update(Presentation presentation, Slide slide)
+    @Override
+    public void update(Slide slide)
     {
         if (slide == null)
         {
             this.repaint();
             return;
         }
-        this.presentation = presentation;
         this.currentSlide = slide;
         this.repaint();
         this.frame.setTitle(this.presentation.getTitle());
@@ -64,23 +71,18 @@ public class SlideViewerComponent extends JComponent
     {
         g.setColor(BG_COLOR);
         g.fillRect(0, 0, this.getSize().width, this.getSize().height);
-        
+
         if (this.presentation.getSlideNumber() < 0 || this.currentSlide == null)
         {
             return;
         }
-        
+
         g.setFont(this.labelFont);
         g.setColor(COLOR);
         g.drawString("Slide " + (1 + this.presentation.getSlideNumber()) + " of " + this.presentation.getSize(), XPOS, YPOS);
-        
-        Rectangle area = new Rectangle(0, YPOS, this.getWidth(), (this.getHeight() - YPOS));
-        
-        this.currentSlide.draw(g, area, this);
-    }
 
-    public JFrame getFrame()
-    {
-        return this.frame;
+        Rectangle area = new Rectangle(0, YPOS, this.getWidth(), (this.getHeight() - YPOS));
+
+        this.currentSlide.draw(g, area, this);
     }
 }
