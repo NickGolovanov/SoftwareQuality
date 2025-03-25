@@ -31,7 +31,7 @@ jobs:
 
   # Testing Phase (Regression Tests)
   testing:
-    if: github.ref == 'refs/heads/test'
+    if: github.ref == 'refs/heads/develop'
     needs: development
     runs-on: ubuntu-latest
     steps:
@@ -47,7 +47,7 @@ jobs:
       - name: Run integration tests
         run: mvn verify
 
-  # # Acceptance Phase (Staging Deployment)
+  # Acceptance Phase (Staging Deployment)
   acceptance:
     if: github.ref == 'refs/heads/acceptance'
     needs: testing
