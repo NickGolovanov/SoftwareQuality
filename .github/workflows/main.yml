@@ -54,20 +54,22 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
 
-          # Fetch all branches
+          # Fetch all branches from the remote
           git fetch --all
 
-          # Check if the 'test' branch exists remotely; if not, create it from develop
+          # Check if the 'test' branch exists remotely and checkout the branch
           if git rev-parse --verify origin/test; then
             git checkout test
           else
-            git checkout -b test develop
+            git checkout --track origin/test  # Ensures we correctly track the remote 'test' branch
           fi
 
           # Merge develop into test if it's not up to date
           git merge develop --no-edit
+
+          # Push the changes to the remote test branch
           git push origin test
-  
+
 
   # Acceptance Phase (Staging Deployment)
   acceptance:
