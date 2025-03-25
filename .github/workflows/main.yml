@@ -22,6 +22,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: maven
 
       - name: Build with Maven
         run: mvn clean package
@@ -43,6 +44,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: maven
 
       - name: Run integration tests
         run: mvn verify
@@ -61,6 +63,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: List target directory contents
+        run: ls -la target/
 
       - name: Deploy to Staging (UAT)
         env:
@@ -69,7 +78,12 @@ jobs:
           STAGING_PASS: ${{ secrets.STAGING_PASS }}
         run: |
           echo "Deploying to Staging..."
-          scp target/*.jar $STAGING_USER@$STAGING_SERVER:/var/www/staging
+          JAR_FILE=$(ls target/*.jar)
+          if [ -z "$JAR_FILE" ]; then
+            echo "No JAR file found in target directory"
+            exit 1
+          fi
+          scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging
           ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/*.jar"
 
   # Production Phase (Push Docker Image)
@@ -86,6 +100,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
 
       # Build Docker Image
       - name: Build Docker Image
