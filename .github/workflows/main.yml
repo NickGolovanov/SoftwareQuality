@@ -23,11 +23,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build with Maven
-        run: mvn clean package
-
-      - name: Run unit tests
-        run: mvn test
+      - name: Build with Maven and Debug
+        run: |
+          mvn clean package
+          echo "Contents of target directory:"
+          ls -la target/
+          echo "Maven build output:"
+          cat target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 
   # Testing Phase (Regression Tests)
   testing:
@@ -62,8 +64,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build with Maven
-        run: mvn clean package
+      - name: Verbose Maven Build
+        run: |
+          mvn clean package -X
+          echo "Contents of target directory:"
+          ls -la target/
+          echo "Listing all files recursively:"
+          find . -name "*.jar"
 
       - name: Deploy to Staging (UAT)
         env:
@@ -81,8 +88,15 @@ jobs:
           echo "    StrictHostKeyChecking no" >> ~/.ssh/config
           echo "    UserKnownHostsFile /dev/null" >> ~/.ssh/config
 
-          # Find the JAR file
-          JAR_FILE=$(ls target/*.jar)
+          # Find the JAR file with more detailed search
+          JAR_FILE=$(find . -name "*.jar" | grep -v "original" | head -n 1)
+          
+          if [ -z "$JAR_FILE" ]; then
+            echo "No JAR file found!"
+            exit 1
+          fi
+
+          echo "Deploying JAR file: $JAR_FILE"
           
           # Deploy using sshpass
           sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging
