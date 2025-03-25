@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - test
       - acceptance
       - main
 
@@ -28,10 +29,28 @@ jobs:
       - name: Run unit tests
         run: mvn test
 
-  # Acceptance Phase (Directly from Development)
-  acceptance:
-    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/acceptance'
+  # Testing Phase (Regression Tests)
+  testing:
+    if: github.ref == 'refs/heads/develop'
     needs: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Run integration tests
+        run: mvn verify
+
+  # Acceptance Phase (Staging Deployment)
+  acceptance:
+    if: github.ref == 'refs/heads/develop'
+    needs: testing
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
