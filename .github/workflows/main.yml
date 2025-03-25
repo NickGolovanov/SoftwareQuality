@@ -81,8 +81,16 @@ jobs:
           echo "    StrictHostKeyChecking no" >> ~/.ssh/config
           echo "    UserKnownHostsFile /dev/null" >> ~/.ssh/config
 
-          # Find the JAR file
-          JAR_FILE=$(ls target/*.jar)
+          # Find the main JAR file (not the original)
+          JAR_FILE="target/SoftwareQuality-1.0-SNAPSHOT.jar"
+          
+          if [ ! -f "$JAR_FILE" ]; then
+            echo "JAR file not found!"
+            ls -la target/
+            exit 1
+          fi
+
+          echo "Deploying JAR file: $JAR_FILE"
           
           # Deploy using sshpass
           sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging
