@@ -48,12 +48,23 @@ jobs:
       - name: Run integration tests
         run: mvn verify
 
-      - name: Push changes to the testing branch
+      - name: Push code to the testing branch
         if: github.ref == 'refs/heads/develop' && success()
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
-          git checkout test
+
+          # Fetch all branches
+          git fetch --all
+
+          # Check if the 'test' branch exists remotely; if not, create it from develop
+          if git rev-parse --verify origin/test; then
+            git checkout test
+          else
+            git checkout -b test develop
+          fi
+
+          # Merge develop into test if it's not up to date
           git merge develop --no-edit
           git push origin test
   
