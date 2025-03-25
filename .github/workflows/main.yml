@@ -31,7 +31,7 @@ jobs:
 
   # Testing Phase (Regression Tests)
   testing:
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/test'
     needs: development
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +49,7 @@ jobs:
 
   # Acceptance Phase (Staging Deployment)
   acceptance:
-    if: github.ref == 'refs/heads/acceptance'
+    if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/acceptance'
     needs: testing
     runs-on: ubuntu-latest
     steps:
