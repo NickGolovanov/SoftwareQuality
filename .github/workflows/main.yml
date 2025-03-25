@@ -74,27 +74,25 @@ jobs:
           # Install sshpass for password-based SSH
           sudo apt-get update
           sudo apt-get install -y sshpass
-
+      
           # Disable host key checking
           mkdir -p ~/.ssh
           echo "Host *" >> ~/.ssh/config
           echo "    StrictHostKeyChecking no" >> ~/.ssh/config
           echo "    UserKnownHostsFile /dev/null" >> ~/.ssh/config
-
-          # Find the main JAR file (not the original)
-          JAR_FILE="target/SoftwareQuality-1.0-SNAPSHOT.jar"
-          
-          if [ ! -f "$JAR_FILE" ]; then
-            echo "JAR file not found!"
-            ls -la target/
-            exit 1
+      
+          # Find the specific JAR file, excluding "original" jars
+          JAR_FILE=$(ls target/*-SNAPSHOT.jar | grep -v 'original' | head -n 1)
+      
+          # Check if the file was found
+          if [ -z "$JAR_FILE" ]; then
+          echo "Error: No JAR file found for deployment."
+          exit 1
           fi
-
-          echo "Deploying JAR file: $JAR_FILE"
-          
+      
           # Deploy using sshpass
-          sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging
-          sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/*.jar"
+          sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging/
+          sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/$(basename $JAR_FILE)"
 
   # Production Phase (Push Docker Image)
   production:
