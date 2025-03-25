@@ -35,7 +35,8 @@ public class JabberPoint
         try
         {
             if (argv.length == 0)
-            { // een demo presentatie
+            {
+                // een demo presentatie
                 AccessorCreator DemoPresentationAccessorCreator = new DemoPresentationAccessorCreator();
                 Accessor DemoPresentation = DemoPresentationAccessorCreator.getAccessor();
                 DemoPresentation.loadFile(presentation, "");
