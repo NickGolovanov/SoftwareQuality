@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - test
       - acceptance
       - main
 
@@ -29,46 +28,10 @@ jobs:
       - name: Run unit tests
         run: mvn test
 
-  # Testing Phase (Regression Tests)
-  testing:
-    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/test'
-    needs: development
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Fetch all history for all branches and tags
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Run integration tests
-        run: mvn verify
-
-      - name: Push code to the testing branch
-        if: github.ref == 'refs/heads/develop' && success()
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "GitHub Actions"
-
-          # Use explicit branch specification to avoid ambiguity
-          git checkout -B test origin/test
-
-          # Merge develop into test
-          git merge origin/develop --no-edit
-
-          # Push the changes to the remote test branch
-          git push origin test
-
-
-  # Acceptance Phase (Staging Deployment)
+  # Acceptance Phase (Directly from Development)
   acceptance:
-    if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/acceptance'
-    needs: testing
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/acceptance'
+    needs: development
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
