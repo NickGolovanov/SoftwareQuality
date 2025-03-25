@@ -24,7 +24,7 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
-        run: mvn clean package  
+        run: mvn clean package
 
       - name: Run unit tests
         run: mvn test
@@ -48,33 +48,34 @@ jobs:
         run: mvn verify
 
   # # Acceptance Phase (Staging Deployment)
-  # acceptance:
-  #   if: github.ref == 'refs/heads/acceptance'
-  #   needs: testing
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+  acceptance:
+    if: github.ref == 'refs/heads/acceptance'
+    needs: testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Set up JDK 17
-  #       uses: actions/setup-java@v3
-  #       with:
-  #         distribution: 'temurin'
-  #         java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-  #     - name: Deploy to Staging (UAT)
-  #       env:
-  #         STAGING_SERVER: ${{ secrets.STAGING_SERVER }}
-  #         STAGING_USER: ${{ secrets.STAGING_USER }}
-  #         STAGING_PASS: ${{ secrets.STAGING_PASS }}
-  #       run: |
-  #         echo "Deploying to Staging..."
-  #         scp target/*.jar $STAGING_USER@$STAGING_SERVER:/var/www/staging
-  #         ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/*.jar"
+      - name: Deploy to Staging (UAT)
+        env:
+          STAGING_SERVER: ${{ secrets.STAGING_SERVER }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_PASS: ${{ secrets.STAGING_PASS }}
+        run: |
+          echo "Deploying to Staging..."
+          scp target/*.jar $STAGING_USER@$STAGING_SERVER:/var/www/staging
+          ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/*.jar"
 
   # Production Phase (Push Docker Image)
   production:
     if: github.ref == 'refs/heads/main'
+    needs: acceptance
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
