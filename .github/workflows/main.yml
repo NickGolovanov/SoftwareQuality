@@ -30,7 +30,6 @@ jobs:
         run: mvn test
 
   # Testing Phase (Regression Tests)
-  # Testing Phase (Regression Tests)
   testing:
     if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/test'
     needs: development
@@ -38,6 +37,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -54,18 +55,11 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
 
-          # Fetch all branches from the remote
-          git fetch --all
+          # Use explicit branch specification to avoid ambiguity
+          git checkout -B test origin/test
 
-          # Check if the 'test' branch exists remotely and checkout the branch
-          if git rev-parse --verify origin/test; then
-            git checkout test
-          else
-            git checkout --track origin/test  # Ensures we correctly track the remote 'test' branch
-          fi
-
-          # Merge develop into test if it's not up to date
-          git merge develop --no-edit
+          # Merge develop into test
+          git merge origin/develop --no-edit
 
           # Push the changes to the remote test branch
           git push origin test
