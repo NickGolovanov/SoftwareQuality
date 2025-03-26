@@ -107,8 +107,7 @@ jobs:
 
   # Production Phase (Push Docker Image)
   production:
-    if: github.ref == 'refs/heads/main'
-    needs: acceptance
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
