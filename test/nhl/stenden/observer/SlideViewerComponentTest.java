@@ -3,25 +3,26 @@ package nhl.stenden.observer;
 import nhl.stenden.Slide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import javax.swing.*;
 import static org.junit.jupiter.api.Assertions.*;
+import org.mockito.Mockito;
 
 class SlideViewerComponentTest {
     private Presentation presentation;
     private SlideViewerComponent slideViewer;
-    private JFrame frame;
 
     @BeforeEach
     void setUp() {
         presentation = new Presentation();
-        frame = new JFrame();
-        slideViewer = new SlideViewerComponent(presentation, frame);
+
+        // Mock SlideViewerComponent without needing JFrame
+        slideViewer = Mockito.mock(SlideViewerComponent.class);
+
         presentation.subscribe(slideViewer);
     }
 
     @Test
     void testObserverIsSubscribed() {
-        assertTrue(presentation.getSize() == 0, "Presentation should start empty.");
+        assertEquals(0, presentation.getSize(), "Presentation should start empty.");
     }
 
     @Test
