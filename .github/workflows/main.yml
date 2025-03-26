@@ -67,7 +67,7 @@ jobs:
       #     github_token: ${{ secrets.VICTOR_TOKEN }}
 
       - name: Merge develop to main
-        uses: everlytic/branch-merge@1.1.2
+        uses: everlytic/branch-merge@1.1.5
         with:
           github_token: ${{ github.token }}
           source_ref: ${{ github.ref }}
@@ -116,6 +116,7 @@ jobs:
   # Production Phase (Push Docker Image)
   production:
     if: github.ref == 'refs/heads/main'
+    needs: acceptance
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
