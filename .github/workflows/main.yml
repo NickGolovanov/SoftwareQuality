@@ -51,19 +51,19 @@ jobs:
   acceptance:
     if: github.ref == 'refs/heads/develop'
     needs: testing
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      # - name: Set up JDK 17
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     distribution: 'temurin'
+      #     java-version: '17'
 
-      - name: Build with Maven
-        run: mvn clean package -DskipTests
+      # - name: Build with Maven
+      #   run: mvn clean package -DskipTests
 
       # - name: Deploy to Staging (UAT)
       #   env:
