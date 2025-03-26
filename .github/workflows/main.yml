@@ -92,63 +92,7 @@ jobs:
       
           # Deploy using sshpass
           sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging/
-          sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/$(basename $JAR_FILE)"  # Acceptance Phase (Staging Deployment)
-  acceptance:
-    if: github.ref == 'refs/heads/develop'
-    needs: testing
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Build with Maven
-        run: mvn clean package
-
-      - name: Deploy to Staging (UAT)
-        env:
-          STAGING_SERVER: ${{ secrets.STAGING_SERVER }}
-          STAGING_USER: ${{ secrets.STAGING_USER }}
-          STAGING_PASS: ${{ secrets.STAGING_PASS }}
-        run: |
-          # Install sshpass for password-based SSH
-          sudo apt-get update
-          sudo apt-get install -y sshpass
-
-          # Install OpenJDK 17 on the staging server if not already installed
-          sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "
-            if ! java -version &>/dev/null; then
-              echo 'Installing OpenJDK 17...';
-              sudo apt-get install -y openjdk-17-jdk;
-            else
-              echo 'Java is already installed.';
-            fi
-          "
-          
-          # Disable host key checking
-          mkdir -p ~/.ssh
-          echo "Host *" >> ~/.ssh/config
-          echo "    StrictHostKeyChecking no" >> ~/.ssh/config
-          echo "    UserKnownHostsFile /dev/null" >> ~/.ssh/config
-          
-          # Find the specific JAR file, excluding "original" jars
-          JAR_FILE=$(ls target/*-SNAPSHOT.jar | grep -v 'original' | head -n 1)
-          
-          # Check if the file was found
-          if [ -z "$JAR_FILE" ]; then
-            echo "Error: No JAR file found for deployment."
-            exit 1
-          fi
-          
-          # Deploy using sshpass
-          sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging/
           sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/$(basename $JAR_FILE)"
-
 
   # Production Phase (Push Docker Image)
   production:
@@ -179,3 +123,4 @@ jobs:
       - name: Push Docker Image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/myproject-name:${{ github.sha }}
+          
