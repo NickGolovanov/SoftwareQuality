@@ -34,15 +34,15 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
+            <artifactId>mockito-junit-jupiter</artifactId>
             <version>4.3.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
+            <artifactId>mockito-core</artifactId>
             <version>4.3.1</version>
-            <scope>test</scope>
+            <scope>test</scope>  <!-- This should be 'test' unless you need it at runtime -->
         </dependency>
     </dependencies>
 

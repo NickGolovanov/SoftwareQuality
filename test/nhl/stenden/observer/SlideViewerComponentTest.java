@@ -4,6 +4,7 @@ import nhl.stenden.Slide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.mockito.Mockito;
 
 class SlideViewerComponentTest {
     private Presentation presentation;

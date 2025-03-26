@@ -26,8 +26,8 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-#      - name: Run unit tests
-#        run: mvn test
+      - name: Maven clean test
+        run: mvn clean test
 
   # Testing Phase (Regression Tests)
   testing:
