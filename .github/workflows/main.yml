@@ -58,13 +58,21 @@ jobs:
         with:
           fetch-depth: 0  # Ensures full history for merging
 
+      # - name: Merge develop to main
+      #   uses: devmasx/merge-branch@v1.4.0
+      #   with:
+      #     type: now
+      #     from_branch: develop
+      #     target_branch: main
+      #     github_token: ${{ secrets.VICTOR_TOKEN }}
+
       - name: Merge develop to main
-        uses: devmasx/merge-branch@v1.4.0
+        uses: everlytic/branch-merge@1.1.2
         with:
-          type: now
-          from_branch: develop
-          target_branch: main
-          github_token: ${{ secrets.VICTOR_TOKEN }}
+          github_token: ${{ github.token }}
+          source_ref: ${{ github.ref }}
+          target_branch: 'master'
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
 
           # - name: Set up JDK 17
           #   uses: actions/setup-java@v3
@@ -107,7 +115,7 @@ jobs:
 
   # Production Phase (Push Docker Image)
   production:
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
