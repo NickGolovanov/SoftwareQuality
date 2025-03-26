@@ -51,7 +51,7 @@ jobs:
   acceptance:
     if: github.ref == 'refs/heads/develop'
     needs: testing
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -63,36 +63,44 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
-        run: mvn clean package
+        run: mvn clean package -DskipTests
 
-      - name: Deploy to Staging (UAT)
-        env:
-          STAGING_SERVER: ${{ secrets.STAGING_SERVER }}
-          STAGING_USER: ${{ secrets.STAGING_USER }}
-          STAGING_PASS: ${{ secrets.STAGING_PASS }}
-        run: |
-          # Install sshpass for password-based SSH
-          sudo apt-get update
-          sudo apt-get install -y sshpass
+      # - name: Deploy to Staging (UAT)
+      #   env:
+      #     STAGING_SERVER: ${{ secrets.STAGING_SERVER }}
+      #     STAGING_USER: ${{ secrets.STAGING_USER }}
+      #     STAGING_PASS: ${{ secrets.STAGING_PASS }}
+      #   run: |
+      #     # Install sshpass for password-based SSH
+      #     sudo apt-get update
+      #     sudo apt-get install -y sshpass
       
-          # Disable host key checking
-          mkdir -p ~/.ssh
-          echo "Host *" >> ~/.ssh/config
-          echo "    StrictHostKeyChecking no" >> ~/.ssh/config
-          echo "    UserKnownHostsFile /dev/null" >> ~/.ssh/config
+      #     # Disable host key checking
+      #     mkdir -p ~/.ssh
+      #     echo "Host *" >> ~/.ssh/config
+      #     echo "    StrictHostKeyChecking no" >> ~/.ssh/config
+      #     echo "    UserKnownHostsFile /dev/null" >> ~/.ssh/config
       
-          # Find the specific JAR file, excluding "original" jars
-          JAR_FILE=$(ls target/*-SNAPSHOT.jar | grep -v 'original' | head -n 1)
+      #     # Find the specific JAR file, excluding "original" jars
+      #     JAR_FILE=$(ls target/*-SNAPSHOT.jar | grep -v 'original' | head -n 1)
       
-          # Check if the file was found
-          if [ -z "$JAR_FILE" ]; then
-          echo "Error: No JAR file found for deployment."
-          exit 1
-          fi
+      #     # Check if the file was found
+      #     if [ -z "$JAR_FILE" ]; then
+      #     echo "Error: No JAR file found for deployment."
+      #     exit 1
+      #     fi
       
-          # Deploy using sshpass
-          sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging/
-          sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/$(basename $JAR_FILE)"
+      #     # Deploy using sshpass
+      #     sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging/
+      #     sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/$(basename $JAR_FILE)"
+
+      - name: Merge develop to main
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          type: now
+          from_branch: develop
+          target_branch: main
+          github_token: ${{ secrets.VICTOR_TOKEN }}
 
   # Production Phase (Push Docker Image)
   production:
