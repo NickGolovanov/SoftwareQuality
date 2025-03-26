@@ -110,7 +110,7 @@ public class MenuController extends MenuBar
         {
             public void actionPerformed(ActionEvent actionEvent)
             {
-                Command aboutBox = new About(receiver);
+                Command aboutBox = new About();
                 aboutBox.execute();
             }
         });
