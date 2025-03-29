@@ -1,3 +1,5 @@
+package nhl.stenden.observer;
+
 import nhl.stenden.observer.Presentation;
 import nhl.stenden.observer.Observer;
 import nhl.stenden.Slide;

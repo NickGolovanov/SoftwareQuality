@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<presentation>
+    <showtitle>Test Presentation</showtitle>
+    <slide>
+        <title>Slide 1</title>
+        <item kind="text" level="1">Text Item 1</item>
+    </slide>
+    <slide>
+        <title>Slide 2</title>
+        <item kind="text" level="1">Text Item 2</item>
+    </slide>
+</presentation>
