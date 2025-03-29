@@ -2,6 +2,8 @@ package nhl.stenden;
 
 import nhl.stenden.factorymethod.*;
 import nhl.stenden.observer.Presentation;
+import nhl.stenden.observer.SlideViewerComponent;
+import nhl.stenden.observer.SlideViewerFrame;
 
 import javax.swing.JOptionPane;
 
@@ -31,7 +33,13 @@ public class JabberPoint
     {
         Style.createStyles();
         Presentation presentation = new Presentation();
-        new SlideViewerFrame(JABVERSION, presentation);
+
+        SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation);
+        presentation.subscribe(slideViewerComponent);
+
+        SlideViewerFrame slideViewerFrame = new SlideViewerFrame(JABVERSION, slideViewerComponent, presentation);
+        presentation.subscribe(slideViewerFrame);
+
         try
         {
             if (argv.length == 0)

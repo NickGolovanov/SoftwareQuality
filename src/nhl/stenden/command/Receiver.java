@@ -12,7 +12,6 @@ import java.io.IOException;
 public class Receiver
 {
     private Presentation presentation;
-    private Frame parent;
 
     protected static final String TESTFILE = "test.xml";
     protected static final String SAVEFILE = "dump.xml";
@@ -24,7 +23,6 @@ public class Receiver
     public Receiver(Presentation presentation)
     {
         this.presentation = presentation;
-        this.parent = presentation.getParent();
     }
 
     public Presentation getPresentation()
@@ -35,16 +33,6 @@ public class Receiver
     public void setPresentation(Presentation presentation)
     {
         this.presentation = presentation;
-    }
-
-    public Frame getParent()
-    {
-        return this.parent;
-    }
-
-    public void setParent(Frame parent)
-    {
-        this.parent = parent;
     }
 
     public void openPresentation(String fileName)
@@ -58,10 +46,10 @@ public class Receiver
             presentation.setSlideNumber(0);
         } catch (IOException exc)
         {
-            JOptionPane.showMessageDialog(parent, IOEX + exc,
+            JOptionPane.showMessageDialog(null, IOEX + exc,
                     LOADERR, JOptionPane.ERROR_MESSAGE);
         }
-        parent.repaint();
+        presentation.notifyObservers();
     }
 
     public void nextSlide()
@@ -88,7 +76,7 @@ public class Receiver
             xmlAccessor.saveFile(presentation, SAVEFILE);
         } catch (IOException exc)
         {
-            JOptionPane.showMessageDialog(parent, IOEX + exc,
+            JOptionPane.showMessageDialog(null, IOEX + exc,
                     SAVEERR, JOptionPane.ERROR_MESSAGE);
         }
     }

@@ -23,7 +23,6 @@ public class SlideViewerComponent extends JComponent implements Observer
     private Slide currentSlide;
     private Font labelFont;
     private Presentation presentation;
-    private JFrame frame;
 
     private static final long serialVersionUID = 227L;
 
@@ -35,35 +34,46 @@ public class SlideViewerComponent extends JComponent implements Observer
     private static final int XPOS = 1100;
     private static final int YPOS = 20;
 
-    public SlideViewerComponent(Presentation presentation, JFrame frame)
+    public SlideViewerComponent(Presentation presentation)
     {
         this.setBackground(BG_COLOR);
         this.presentation = presentation;
         this.labelFont = new Font(FONT_NAME, FONT_STYLE, FONT_HEIGHT);
-        this.frame = frame;
     }
 
-    public JFrame getFrame()
+    public Slide getCurrentSlide()
     {
-        return this.frame;
+        return this.currentSlide;
+    }
+
+    public void setCurrentSlide(Slide currentSlide)
+    {
+        this.currentSlide = currentSlide;
+    }
+
+    public Font getLabelFont()
+    {
+        return this.labelFont;
+    }
+
+    public void setLabelFont(Font labelFont)
+    {
+        this.labelFont = labelFont;
+    }
+
+    public Presentation getPresentation()
+    {
+        return this.presentation;
+    }
+
+    public void setPresentation(Presentation presentation)
+    {
+        this.presentation = presentation;
     }
 
     public Dimension getPreferredSize()
     {
         return new Dimension(Slide.WIDTH, Slide.HEIGHT);
-    }
-
-    @Override
-    public void update(Slide slide)
-    {
-        if (slide == null)
-        {
-            this.repaint();
-            return;
-        }
-        this.currentSlide = slide;
-        this.repaint();
-        this.frame.setTitle(this.presentation.getTitle());
     }
 
     // draw the slide
@@ -84,5 +94,19 @@ public class SlideViewerComponent extends JComponent implements Observer
         Rectangle area = new Rectangle(0, YPOS, this.getWidth(), (this.getHeight() - YPOS));
 
         this.currentSlide.draw(g, area, this);
+    }
+
+
+    @Override
+    public void update(Slide slide)
+    {
+        if (slide == null)
+        {
+            this.repaint();
+            return;
+        }
+
+        this.currentSlide = slide;
+        this.repaint();
     }
 }

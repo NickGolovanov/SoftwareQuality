@@ -1,9 +1,8 @@
-package nhl.stenden;
+package nhl.stenden.observer;
 
+import nhl.stenden.Slide;
 import nhl.stenden.command.KeyController;
 import nhl.stenden.command.MenuController;
-import nhl.stenden.observer.Presentation;
-import nhl.stenden.observer.SlideViewerComponent;
 
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
@@ -17,7 +16,7 @@ import javax.swing.JFrame;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class SlideViewerFrame extends JFrame
+public class SlideViewerFrame extends JFrame implements Observer
 {
     private static final long serialVersionUID = 3227L;
 
@@ -25,12 +24,9 @@ public class SlideViewerFrame extends JFrame
     public final static int WIDTH = 1200;
     public final static int HEIGHT = 800;
 
-    public SlideViewerFrame(String title, Presentation presentation)
+    public SlideViewerFrame(String title, SlideViewerComponent slideViewerComponent, Presentation presentation)
     {
         super(title);
-        SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, this);
-        presentation.setParent(this);
-        presentation.subscribe(slideViewerComponent);
         this.setupWindow(slideViewerComponent, presentation);
     }
 
@@ -51,5 +47,18 @@ public class SlideViewerFrame extends JFrame
         this.setMenuBar(new MenuController(this, presentation));    // add another controller
         this.setSize(new Dimension(WIDTH, HEIGHT)); // Same sizes as Slide has.
         this.setVisible(true);
+    }
+
+    @Override
+    public void update(Slide slide)
+    {
+        this.repaint();
+
+        if (slide == null)
+        {
+            return;
+        }
+
+        this.setTitle(slide.getTitle());
     }
 }

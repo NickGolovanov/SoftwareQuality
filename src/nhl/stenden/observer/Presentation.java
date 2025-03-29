@@ -2,7 +2,6 @@ package nhl.stenden.observer;
 
 import nhl.stenden.Slide;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,17 +19,10 @@ public class Presentation
     private String showTitle; // title of the presentation
     private List<Slide> slides = new ArrayList<>(); // an ArrayList with Slides
     private int currentSlideNumber = 0; // the slidenummer of the current Slide
-    private Frame parent = null;// the viewcomponent of the Slides
     private List<Observer> observers = new ArrayList<>();
 
     public Presentation()
     {
-        clear();
-    }
-
-    public Presentation(Frame parent)
-    {
-        this.parent = parent;
         clear();
     }
 
@@ -49,14 +41,14 @@ public class Presentation
         this.showTitle = showTitle;
     }
 
-    public Frame getParent()
+    public List<Observer> getObservers()
     {
-        return this.parent;
+        return observers;
     }
 
-    public void setParent(Frame parent)
+    public void setObservers(List<Observer> observers)
     {
-        this.parent = parent;
+        this.observers = observers;
     }
 
     // give the number of the current slide
