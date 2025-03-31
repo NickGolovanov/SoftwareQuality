@@ -1,4 +1,3 @@
-
 package nhl.stenden.command;
 
 import nhl.stenden.AboutBox;
@@ -109,5 +108,22 @@ class CommandTest
         Command save = new Save(receiver);
         save.execute();
         Mockito.verify(receiver).save();
+    }
+
+    private boolean executed = false;
+
+    private class TestCommand implements Command {
+        @Override
+        public void execute() {
+            executed = true;
+        }
+    }
+
+    @Test
+    void testCommandExecution() {
+        Command command = new TestCommand();
+        assertFalse(executed);
+        command.execute();
+        assertTrue(executed);
     }
 }

@@ -26,6 +26,13 @@ public class KeyController extends KeyAdapter
         this.receiver = new Receiver(presentation);
     }
 
+    // Constructor for testing purposes
+    public KeyController(Presentation presentation, Receiver receiver)
+    {
+        this.presentation = presentation;
+        this.receiver = receiver;
+    }
+
     public void keyPressed(KeyEvent keyEvent)
     {
         switch (keyEvent.getKeyCode())

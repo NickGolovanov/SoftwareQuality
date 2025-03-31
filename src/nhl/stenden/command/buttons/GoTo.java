@@ -20,7 +20,13 @@ public class GoTo implements Command
     public void execute()
     {
         String pageNumberString = JOptionPane.showInputDialog(GlobalVariable.PAGENR.getButtonName());
-        int pageNumber = Integer.parseInt(pageNumberString);
-        this.receiver.setSlideNumber(pageNumber - 1);
+        if (pageNumberString != null && !pageNumberString.trim().isEmpty()) {
+            try {
+                int pageNumber = Integer.parseInt(pageNumberString);
+                this.receiver.setSlideNumber(pageNumber - 1);
+            } catch (NumberFormatException e) {
+                // Invalid input, do nothing
+            }
+        }
     }
 }
