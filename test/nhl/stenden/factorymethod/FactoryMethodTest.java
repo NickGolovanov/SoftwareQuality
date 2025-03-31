@@ -59,6 +59,6 @@ class FactoryMethodTest
         AccessorCreator creator = new XMLAccessorCreator();
         Accessor accessor = creator.getAccessor();
 
-        assertDoesNotThrow(() -> accessor.loadFile(presentation, "invalid.xml"));
+        assertThrows(IOException.class, () -> accessor.loadFile(presentation, "invalid.xml"));
     }
 }

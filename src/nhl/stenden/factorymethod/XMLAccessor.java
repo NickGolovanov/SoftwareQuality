@@ -57,7 +57,6 @@ public class XMLAccessor extends Accessor
     {
         NodeList titles = element.getElementsByTagName(tagName);
         return titles.item(0).getTextContent();
-
     }
 
     public void loadFile(Presentation presentation, String filename) throws IOException
@@ -89,13 +88,13 @@ public class XMLAccessor extends Accessor
             }
         } catch (IOException iox)
         {
-            System.err.println(iox.toString());
+            throw iox; // Rethrow the IOException
         } catch (SAXException sax)
         {
-            System.err.println(sax.getMessage());
+            throw new IOException("XML parsing error: " + sax.getMessage(), sax);
         } catch (ParserConfigurationException pcx)
         {
-            System.err.println(PARSER_CONFIG_ERROR);
+            throw new IOException("Parser configuration error: " + PARSER_CONFIG_ERROR, pcx);
         }
     }
 
