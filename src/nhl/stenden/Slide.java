@@ -37,10 +37,23 @@ public class Slide
         this.title = title;
     }
 
+    // give all SlideItems in a List
+    public List<SlideItem> getSlides()
+    {
+        return this.slides;
+    }
+
+    // change the SlideItems
+    public void setSlides(List<SlideItem> slides)
+    {
+        this.slides = slides;
+    }
+
     // Create TextItem of String, and add the TextItem
     public void append(int level, String message)
     {
-        if (message == null) {
+        if (message == null)
+        {
             return;
         }
 
@@ -50,7 +63,8 @@ public class Slide
     // Add a slide item
     public void append(SlideItem slide)
     {
-        if (slide == null) {
+        if (slide == null)
+        {
             return;
         }
 
@@ -66,12 +80,6 @@ public class Slide
         }
 
         return this.slides.get(number);
-    }
-
-    // give all SlideItems in a Vector
-    public List<SlideItem> getSlides()
-    {
-        return this.slides;
     }
 
     // give the size of the Slide
@@ -109,7 +117,8 @@ public class Slide
     // Give the scale for drawing
     private float getScale(Rectangle area)
     {
-        if (area == null) {
+        if (area == null)
+        {
             return 1.0f;
         }
         return Math.min(((float) area.width) / WIDTH, ((float) area.height) / HEIGHT);

@@ -67,9 +67,6 @@ public class XMLAccessor extends Accessor
                     this.loadSlideItem(slide, item);
                 }
             }
-        } catch (IOException iox)
-        {
-            throw iox; // Rethrow the IOException
         } catch (SAXException sax)
         {
             throw new IOException("XML parsing error: " + sax.getMessage(), sax);
@@ -79,7 +76,7 @@ public class XMLAccessor extends Accessor
         }
     }
 
-    protected void loadSlideItem(Slide slide, Element item)
+    private void loadSlideItem(Slide slide, Element item)
     {
         int level = 1; // default
         NamedNodeMap attributes = item.getAttributes();

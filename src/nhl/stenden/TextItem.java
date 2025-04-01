@@ -23,6 +23,12 @@ public class TextItem extends SlideItem
         this.text = text;
     }
 
+    // An empty text-item
+    public TextItem()
+    {
+        this(0, null);
+    }
+
     public String getText()
     {
         return this.text == null ? "" : this.text;

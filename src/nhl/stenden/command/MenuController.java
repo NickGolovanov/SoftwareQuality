@@ -22,8 +22,8 @@ public class MenuController extends MenuBar
 
     private static final long serialVersionUID = 227L;
 
-    protected static final String TESTFILE = "test.xml";
-    protected static final String SAVEFILE = "dump.xml";
+    private static final String TESTFILE = "test.xml";
+    private static final String SAVEFILE = "dump.xml";
 
     public MenuController(Presentation presentation)
     {
