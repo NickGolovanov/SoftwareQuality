@@ -26,9 +26,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      - name: Maven clean test
-        run: mvn clean test
-
   # Testing Phase (Regression Tests)
   testing:
     if: github.ref == 'refs/heads/develop'
@@ -45,7 +42,7 @@ jobs:
           java-version: '17'
 
       - name: Run integration tests
-        run: mvn verify
+        run: mvn clean test
 
   # Acceptance Phase (Merge to Main)
   acceptance:
