@@ -46,14 +46,14 @@ jobs:
 
   # Acceptance Phase (Merge to Main)
   acceptance:
-    if: github.ref == 'refs/heads/develop'
+    if: ${{ always() && github.ref == 'refs/heads/develop' }}
     needs: testing
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensures full history for merging
+          fetch-depth: 0 # Ensures full history for merging
 
       # - name: Merge develop to main
       #   uses: devmasx/merge-branch@v1.4.0
@@ -108,7 +108,6 @@ jobs:
           #     # Deploy using sshpass
           #     sshpass -p "$STAGING_PASS" scp "$JAR_FILE" $STAGING_USER@$STAGING_SERVER:/var/www/staging/
           #     sshpass -p "$STAGING_PASS" ssh $STAGING_USER@$STAGING_SERVER "java -jar /var/www/staging/$(basename $JAR_FILE)"
-
 
   # Production Phase (Push Docker Image)
   production:
