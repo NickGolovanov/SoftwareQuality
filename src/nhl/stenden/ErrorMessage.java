@@ -8,8 +8,10 @@ public enum ErrorMessage
     UNKNOWN_TYPE("Unknown Element type"),
     NUMBER_FORMAT_ERROR("Number Format Exception"),
     IOEX("IO Exception: "),
+    IOERR("IO Error: "),
     LOADERR("Load Error"),
     SAVEERR("Save Error"),
+    JABERR("Jabberpoint Error "),
     INVALID_PAGE_NUMBER("Invalid page number");
 
 
