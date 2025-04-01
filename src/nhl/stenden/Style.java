@@ -36,10 +36,7 @@ public class Style
 
     public static Style getStyle(int level)
     {
-        if (level >= styles.length)
-        {
-            level = styles.length - 1;
-        }
+        level = Math.max(0, Math.min(level, styles.length - 1));
         return styles[level];
     }
 

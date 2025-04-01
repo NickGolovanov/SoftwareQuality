@@ -137,13 +137,10 @@ public class TextItem extends SlideItem {
 		AttributedString attributedString = this.getAttributedString(style, scale);
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		FontRenderContext fontRenderContext = graphics2D.getFontRenderContext();
-		LineBreakMeasurer measurer = new LineBreakMeasurer(attributedString.getIterator(), fontRenderContext);
 		
-		float wrappingWidth = (Slide.WIDTH - style.getIndent()) * scale;
-		while (measurer.getPosition() < this.getText().length()) {
-			TextLayout layout = measurer.nextLayout(wrappingWidth);
-			layouts.add(layout);
-		}
+		// Create a single TextLayout for the entire text
+		TextLayout layout = new TextLayout(attributedString.getIterator(), fontRenderContext);
+		layouts.add(layout);
 		
 		return layouts;
 	}
