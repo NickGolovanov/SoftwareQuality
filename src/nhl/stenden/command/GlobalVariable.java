@@ -15,7 +15,7 @@ public enum GlobalVariable
     SAVE("Save"),
     VIEW("View");
 
-    private String buttonName;
+    private final String buttonName;
 
     GlobalVariable(String buttonName)
     {
@@ -24,7 +24,7 @@ public enum GlobalVariable
 
     public String getButtonName()
     {
-        return buttonName;
+        return this.buttonName;
     }
 
 

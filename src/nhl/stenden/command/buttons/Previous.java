@@ -5,7 +5,7 @@ import nhl.stenden.command.Receiver;
 
 public class Previous implements Command
 {
-    private Receiver receiver;
+    private final Receiver receiver;
 
     public Previous(Receiver receiver)
     {

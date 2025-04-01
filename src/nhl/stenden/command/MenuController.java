@@ -2,10 +2,12 @@ package nhl.stenden.command;
 
 import nhl.stenden.observer.Presentation;
 import nhl.stenden.command.buttons.*;
+import nhl.stenden.factorymethod.XMLAccessorCreator;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>The controller for the menu</p>
@@ -15,110 +17,85 @@ import java.awt.event.ActionListener;
  */
 public class MenuController extends MenuBar
 {
-    private final Frame parent; // the frame, only used as parent for the Dialogs
-    private final Presentation presentation; // Commands are given to the presentation
     private final Receiver receiver;
+    private final Map<GlobalVariable, ActionListener> actionListeners;
 
     private static final long serialVersionUID = 227L;
 
     protected static final String TESTFILE = "test.xml";
     protected static final String SAVEFILE = "dump.xml";
 
-    protected static final String IOEX = "IO Exception: ";
-    protected static final String LOADERR = "Load Error";
-    protected static final String SAVEERR = "Save Error";
-
-    public MenuController(Frame parent, Presentation presentation)
+    public MenuController(Presentation presentation)
     {
-        this.parent = parent;
-        this.presentation = presentation;
-        this.receiver = new Receiver(presentation);
+        this.receiver = new Receiver(presentation, new XMLAccessorCreator());
+        this.actionListeners = new HashMap<>();
 
-        MenuItem menuItem;
+        initializeActionListeners();
 
+        createFileMenu();
+        createViewMenu();
+        createHelpMenu();
+    }
+
+    private void createFileMenu()
+    {
         Menu fileMenu = new Menu(GlobalVariable.FILE.getButtonName());
-        fileMenu.add(menuItem = this.createMenuItem(GlobalVariable.OPEN.getButtonName()));
-        menuItem.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-                Command openCommand = new Open(receiver, TESTFILE);
-                openCommand.execute();
-            }
-        });
-        fileMenu.add(menuItem = this.createMenuItem(GlobalVariable.NEW.getButtonName()));
-        menuItem.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-                Save save = new Save(receiver);
-                save.execute();
-            }
-        });
-        fileMenu.add(menuItem = this.createMenuItem(GlobalVariable.SAVE.getButtonName()));
-        menuItem.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                Save save = new Save(receiver);
-                save.execute();
-            }
-        });
-        fileMenu.addSeparator();
-        fileMenu.add(menuItem = this.createMenuItem(GlobalVariable.EXIT.getButtonName()));
-        menuItem.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-                Exit exit = new Exit(receiver);
-                exit.execute();
-            }
+        addMenuItems(fileMenu, new GlobalVariable[]{
+                GlobalVariable.OPEN,
+                GlobalVariable.NEW,
+                GlobalVariable.SAVE,
+                GlobalVariable.EXIT
         });
         add(fileMenu);
+    }
+
+    private void createViewMenu()
+    {
         Menu viewMenu = new Menu(GlobalVariable.VIEW.getButtonName());
-        viewMenu.add(menuItem = this.createMenuItem(GlobalVariable.NEXT.getButtonName()));
-        menuItem.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-                Next nextCommand = new Next(receiver);
-                nextCommand.execute();
-            }
-        });
-        viewMenu.add(menuItem = this.createMenuItem(GlobalVariable.PREV.getButtonName()));
-        menuItem.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-                Previous previous = new Previous(receiver);
-                previous.execute();
-            }
-        });
-        viewMenu.add(menuItem = this.createMenuItem(GlobalVariable.GOTO.getButtonName()));
-        menuItem.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-                GoTo goTo = new GoTo(receiver);
-                goTo.execute();
-            }
+        addMenuItems(viewMenu, new GlobalVariable[]{
+                GlobalVariable.NEXT,
+                GlobalVariable.PREV,
+                GlobalVariable.GOTO
         });
         add(viewMenu);
+    }
+
+    private void createHelpMenu()
+    {
         Menu helpMenu = new Menu(GlobalVariable.HELP.getButtonName());
-        helpMenu.add(menuItem = this.createMenuItem(GlobalVariable.ABOUT.getButtonName()));
-        menuItem.addActionListener(new ActionListener()
+        addMenuItems(helpMenu, new GlobalVariable[]{GlobalVariable.ABOUT});
+        setHelpMenu(helpMenu);
+    }
+
+    private void addMenuItems(Menu menu, GlobalVariable[] items)
+    {
+        for (GlobalVariable item : items)
         {
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-                Command aboutBox = new About(receiver);
-                aboutBox.execute();
-            }
-        });
-        setHelpMenu(helpMenu);        // needed for portability (Motif, etc.).
+            MenuItem menuItem = createMenuItem(item.getButtonName());
+            menuItem.addActionListener(this.createActionListener(item));
+            menu.add(menuItem);
+        }
+    }
+
+    private void initializeActionListeners()
+    {
+        actionListeners.put(GlobalVariable.OPEN, e -> new Open(receiver, TESTFILE).execute());
+        actionListeners.put(GlobalVariable.NEW, e -> new Save(receiver, SAVEFILE).execute());
+        actionListeners.put(GlobalVariable.SAVE, e -> new Save(receiver, SAVEFILE).execute());
+        actionListeners.put(GlobalVariable.EXIT, e -> new Exit(receiver).execute());
+        actionListeners.put(GlobalVariable.NEXT, e -> new Next(receiver).execute());
+        actionListeners.put(GlobalVariable.PREV, e -> new Previous(receiver).execute());
+        actionListeners.put(GlobalVariable.GOTO, e -> new GoTo(receiver).execute());
+        actionListeners.put(GlobalVariable.ABOUT, e -> new About().execute());
+    }
+
+    public ActionListener createActionListener(GlobalVariable item)
+    {
+        return actionListeners.get(item);
     }
 
     // create a menu item
-    public MenuItem createMenuItem(String name)
+    private MenuItem createMenuItem(String name)
     {
         return new MenuItem(name, new MenuShortcut(name.charAt(0)));
     }

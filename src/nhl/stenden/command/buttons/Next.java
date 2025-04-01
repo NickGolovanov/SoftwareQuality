@@ -5,7 +5,7 @@ import nhl.stenden.command.Receiver;
 
 public class Next implements Command
 {
-    private Receiver receiver;
+    private final Receiver receiver;
 
     public Next(Receiver receiver)
     {

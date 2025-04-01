@@ -5,7 +5,7 @@ import nhl.stenden.command.Receiver;
 
 public class Exit implements Command
 {
-    private Receiver receiver;
+    private final Receiver receiver;
 
     private static final int EXIT_CODE = 0;
 
