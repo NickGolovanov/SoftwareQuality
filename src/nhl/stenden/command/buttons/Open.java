@@ -5,8 +5,8 @@ import nhl.stenden.command.Receiver;
 
 public class Open implements Command
 {
-    private Receiver receiver;
-    private String fileName;
+    private final Receiver receiver;
+    private final String fileName;
 
     public Open(Receiver receiver, String fileName)
     {

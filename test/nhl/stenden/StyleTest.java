@@ -22,7 +22,6 @@ class StyleTest {
 
     @Test
     void testCreateStyles() {
-        Style[] styles = new Style[5];
         Style.createStyles();
         
         // Test each style level

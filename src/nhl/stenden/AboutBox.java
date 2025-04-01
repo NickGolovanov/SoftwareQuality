@@ -1,7 +1,6 @@
 package nhl.stenden;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * De About-box voor JabberPoint.

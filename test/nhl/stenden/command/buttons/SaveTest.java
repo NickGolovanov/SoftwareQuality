@@ -7,15 +7,17 @@ import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-class SaveTest {
+class SaveTest
+{
     @Mock
     private Receiver receiver;
 
     @Test
-    void testExecute() {
+    void testExecute()
+    {
         MockitoAnnotations.openMocks(this);
-        Save save = new Save(receiver);
+        Save save = new Save(receiver, "test.xml");
         save.execute();
-        verify(receiver).save();
+        verify(receiver).save("test.xml");
     }
 } 

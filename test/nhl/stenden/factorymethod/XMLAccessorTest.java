@@ -13,7 +13,6 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -68,7 +67,7 @@ class XMLAccessorTest {
         Slide slide = presentation.getSlide(0);
         assertEquals("Test Slide", slide.getTitle());
         assertEquals(1, slide.getSlides().size());
-        SlideItem item = slide.getSlides().elementAt(0);
+        SlideItem item = slide.getSlide(0);
         assertTrue(item instanceof TextItem);
         assertEquals(1, item.getLevel());
         assertEquals("Test Text Item", ((TextItem) item).getText());
@@ -113,7 +112,7 @@ class XMLAccessorTest {
         Slide slide = presentation.getSlide(0);
         assertEquals("Test Slide", slide.getTitle());
         assertEquals(1, slide.getSlides().size());
-        SlideItem item = slide.getSlides().elementAt(0);
+        SlideItem item = slide.getSlide(0);
         assertTrue(item instanceof BitmapItem);
         assertEquals(1, item.getLevel());
         assertEquals("test.jpg", ((BitmapItem) item).getImageName());

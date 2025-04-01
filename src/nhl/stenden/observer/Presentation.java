@@ -14,58 +14,64 @@ import java.util.List;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class Presentation
+public class Presentation implements SlideManagement, PresentationControl, Observable
 {
     private String showTitle; // title of the presentation
     private List<Slide> slides = new ArrayList<>(); // an ArrayList with Slides
-    private int currentSlideNumber = 0; // the slidenummer of the current Slide
-    private List<Observer> observers = new ArrayList<>();
+    private int currentSlideNumber = 0; // the index of the current Slide
+    private final ObservableSupport observableSupport;
+    private final ApplicationExit applicationExit;
 
     public Presentation()
     {
+        this(new SystemApplicationExit());
         clear();
     }
 
+    public Presentation(ApplicationExit applicationExit)
+    {
+        this.applicationExit = applicationExit;
+        this.observableSupport = new ObservableSupport(this);
+    }
+    
+    public void exit(int status)
+    {
+        this.applicationExit.exit(status);
+    }
+
+    @Override
     public int getSize()
     {
         return this.slides.size();
     }
 
+    @Override
     public String getTitle()
     {
         return this.showTitle;
     }
 
+    @Override
     public void setTitle(String showTitle)
     {
         this.showTitle = showTitle;
-    }
-
-    public List<Observer> getObservers()
-    {
-        return observers;
-    }
-
-    public void setObservers(List<Observer> observers)
-    {
-        this.observers = observers;
-    }
-
-    // give the number of the current slide
-    public int getSlideNumber()
-    {
-        return currentSlideNumber;
-    }
-
-    // change the current slide number and signal it to the window
-    public void setSlideNumber(int number)
-    {
-        this.currentSlideNumber = number;
-
         this.notifyObservers();
     }
 
-    // go to the previous slide unless your at the beginning of the presentation
+    @Override
+    public int getSlideNumber()
+    {
+        return this.currentSlideNumber;
+    }
+
+    @Override
+    public void setSlideNumber(int number)
+    {
+        this.currentSlideNumber = number;
+        this.notifyObservers();
+    }
+
+    @Override
     public void prevSlide()
     {
         if (this.currentSlideNumber > 0)
@@ -74,7 +80,7 @@ public class Presentation
         }
     }
 
-    // go to the next slide unless your at the end of the presentation.
+    @Override
     public void nextSlide()
     {
         if (this.currentSlideNumber < (this.getSize() - 1))
@@ -83,20 +89,21 @@ public class Presentation
         }
     }
 
-    // Delete the presentation to be ready for the next one.
+    @Override
     public void clear()
     {
         this.slides = new ArrayList<Slide>();
         setSlideNumber(-1);
     }
 
-    // Add a slide to the presentation
+    @Override
     public void append(Slide slide)
     {
         this.slides.add(slide);
+        this.notifyObservers();
     }
 
-    // Get a slide with a certain slidenumber
+    @Override
     public Slide getSlide(int number)
     {
         if (number < 0 || number >= this.getSize())
@@ -106,32 +113,34 @@ public class Presentation
         return this.slides.get(number);
     }
 
-    // Give the current slide
+    @Override
     public Slide getCurrentSlide()
     {
         return this.getSlide(this.currentSlideNumber);
     }
 
-    public void exit(int n)
-    {
-        System.exit(n);
-    }
 
+    @Override
     public void subscribe(Observer observer)
     {
-        this.observers.add(observer);
+        this.observableSupport.subscribe(observer);
     }
 
+    @Override
     public void unsubscribe(Observer observer)
     {
-        this.observers.remove(observer);
+        this.observableSupport.unsubscribe(observer);
     }
 
+    @Override
     public void notifyObservers()
     {
-        for (Observer observer : this.observers)
-        {
-            observer.update(this.getCurrentSlide());
-        }
+        this.observableSupport.notifyObservers();
+    }
+
+    @Override
+    public List<Observer> getObservers()
+    {
+        return this.observableSupport.getObservers();
     }
 }

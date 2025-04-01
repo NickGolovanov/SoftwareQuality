@@ -1,5 +1,6 @@
 package nhl.stenden.command;
 
+import nhl.stenden.factorymethod.XMLAccessorCreator;
 import nhl.stenden.observer.Presentation;
 import nhl.stenden.command.buttons.Exit;
 import nhl.stenden.command.buttons.Next;
@@ -17,20 +18,16 @@ import java.awt.event.KeyEvent;
 
 public class KeyController extends KeyAdapter
 {
-    private final Presentation presentation; // Commands are given to the presentation
     private final Receiver receiver;
+
+    public KeyController(Presentation presentation, Receiver receiver)
+    {
+        this.receiver = receiver;
+    }
 
     public KeyController(Presentation presentation)
     {
-        this.presentation = presentation;
-        this.receiver = new Receiver(presentation);
-    }
-
-    // Constructor for testing purposes
-    public KeyController(Presentation presentation, Receiver receiver)
-    {
-        this.presentation = presentation;
-        this.receiver = receiver;
+        this(presentation, new Receiver(presentation, new XMLAccessorCreator()));
     }
 
     public void keyPressed(KeyEvent keyEvent)

@@ -4,10 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import static org.mockito.Mockito.*;
 
 class AboutTest {
     @Mock

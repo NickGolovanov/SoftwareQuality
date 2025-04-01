@@ -6,9 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 
-import javax.swing.JFrame;
-import java.awt.event.WindowEvent;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SlideViewerFrameTest {

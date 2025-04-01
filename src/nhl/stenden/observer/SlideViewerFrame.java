@@ -44,7 +44,7 @@ public class SlideViewerFrame extends JFrame implements Observer
         });
         this.getContentPane().add(slideViewerComponent);
         this.addKeyListener(new KeyController(presentation)); // add a controller
-        this.setMenuBar(new MenuController(this, presentation));    // add another controller
+        this.setMenuBar(new MenuController(presentation));    // add another controller
         this.setSize(new Dimension(WIDTH, HEIGHT)); // Same sizes as Slide has.
         this.setVisible(true);
     }

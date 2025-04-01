@@ -89,9 +89,9 @@ class CommandTest
     @Test
     void newCommandTest()
     {
-        Command newCommand = new New(receiver);
+        Command newCommand = new New(receiver, "test.xml");
         newCommand.execute();
-        Mockito.verify(receiver).save();
+        Mockito.verify(receiver).save("test.xml");
     }
 
     @Test
@@ -105,22 +105,25 @@ class CommandTest
     @Test
     void saveCommandTest()
     {
-        Command save = new Save(receiver);
+        Command save = new Save(receiver, "test.xml");
         save.execute();
-        Mockito.verify(receiver).save();
+        Mockito.verify(receiver).save("test.xml");
     }
 
     private boolean executed = false;
 
-    private class TestCommand implements Command {
+    private class TestCommand implements Command
+    {
         @Override
-        public void execute() {
+        public void execute()
+        {
             executed = true;
         }
     }
 
     @Test
-    void testCommandExecution() {
+    void testCommandExecution()
+    {
         Command command = new TestCommand();
         assertFalse(executed);
         command.execute();
