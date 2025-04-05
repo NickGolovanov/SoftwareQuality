@@ -2,19 +2,9 @@ package nhl.stenden;
 
 import java.awt.*;
 
-/**
- * <p>Style is for Indent, Color, Font and Leading.</p>
- * <p>Direct relation between style-number and item-level:
- * in Slide style if fetched for an item
- * with style-number as item-level.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
- */
-
 public class Style
 {
-    private static Style[] styles; // de styles
+    private static Style[] styles; 
 
     private static final String FONT_NAME = "Helvetica";
     private int indent;

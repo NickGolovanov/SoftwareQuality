@@ -10,10 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>The controller for the menu</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
+ * MenuController class that manages menu actions using Command pattern.
+ * 
+ * SOLID Principles Implementation:
+ * - Single Responsibility Principle (SRP): Handles only menu control functionality
+ * - Dependency Inversion Principle (DIP): Depends on Command interface rather than concrete commands
+ * - Open-Closed Principle (OCP): New menu items can be added without modifying existing code
+ * - Liskov Substitution Principle (LSP): Works with any command implementation
  */
 public class MenuController extends MenuBar
 {

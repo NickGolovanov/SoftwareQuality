@@ -9,13 +9,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import javax.swing.JFrame;
 
-/**
- * <p>The application window for a slideviewcomponent</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
- */
-
 public class SlideViewerFrame extends JFrame implements Observer
 {
     private static final long serialVersionUID = 3227L;

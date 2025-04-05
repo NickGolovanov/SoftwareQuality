@@ -5,6 +5,15 @@ import nhl.stenden.Slide;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ObservableSupport class that provides reusable Observable implementation.
+ * 
+ * SOLID Principles Implementation:
+ * - Single Responsibility Principle (SRP): Handles only the mechanics of observer management
+ * - Open-Closed Principle (OCP): Can be extended or composed without modification
+ * - Dependency Inversion Principle (DIP): Depends on Observer interface
+ * - Interface Segregation Principle (ISP): Implements only Observable-related functionality
+ */
 public class ObservableSupport implements Observable
 {
     private final List<Observer> observers = new ArrayList<>();

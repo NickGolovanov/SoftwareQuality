@@ -5,14 +5,14 @@ import nhl.stenden.observer.Presentation;
 import java.io.IOException;
 
 /**
- * <p>Een Accessor maakt het mogelijk om gegevens voor een presentatie
- * te lezen of te schrijven.</p>
- * <p>Niet-abstracte subklassen moeten de load en de save methode implementeren.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
+ * Abstract base class for file accessors.
+ * 
+ * SOLID Principles Implementation:
+ * - Single Responsibility Principle (SRP): Each accessor handles only file operations for a specific format
+ * - Open-Closed Principle (OCP): New accessor types can be added by extending this class
+ * - Liskov Substitution Principle (LSP): All concrete accessors must properly implement the abstract methods
+ * - Dependency Inversion Principle (DIP): High-level modules depend on this abstraction
  */
-
 public abstract class Accessor
 {
     public static final String DEMO_NAME = "Demonstration presentation";
@@ -22,8 +22,8 @@ public abstract class Accessor
     {
     }
 
-    abstract public void loadFile(Presentation p, String fn) throws IOException;
+    public abstract void loadFile(Presentation presentation, String filename) throws IOException;
 
-    abstract public void saveFile(Presentation p, String fn) throws IOException;
+    public abstract void saveFile(Presentation presentation, String filename) throws IOException;
 
 }
