@@ -5,13 +5,6 @@ import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * <p>A slide. This class has a drawing functionality.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
- */
-
 public class Slide
 {
     public final static int WIDTH = 1200;

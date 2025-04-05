@@ -5,13 +5,13 @@ import java.awt.Graphics;
 import java.awt.image.ImageObserver;
 
 /**
- * <p>The abstract class for an item on a slide<p>
- * <p>All SlideItems have drawingfunctionality.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
+ * Abstract base class for items in a slide.
+ * 
+ * SOLID Principles Implementation:
+ * - Single Responsibility Principle (SRP): Class handles only slide item properties and behavior
+ * - Open-Closed Principle (OCP): Base class that can be extended for new item types without modification
+ * - Liskov Substitution Principle (LSP): Defines contract that all subclasses must follow
  */
-
 public abstract class SlideItem
 {
     private int level = 0;

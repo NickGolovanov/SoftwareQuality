@@ -7,13 +7,14 @@ import java.util.List;
 
 
 /**
- * <p>Presentation maintains the slides in the presentation.</p>
- * <p>There is only instance of this class.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
+ * Presentation class that manages slides and implements Observable pattern.
+ * 
+ * SOLID Principles Implementation:
+ * - Single Responsibility Principle (SRP): Manages presentation state and notifies observers
+ * - Dependency Inversion Principle (DIP): Depends on Observer interface rather than concrete implementations
+ * - Open-Closed Principle (OCP): New functionality can be added through observers without modifying this class
+ * - Liskov Substitution Principle (LSP): Properly implements Observable interface contract
  */
-
 public class Presentation implements SlideManagement, PresentationControl, Observable
 {
     private String showTitle; // title of the presentation

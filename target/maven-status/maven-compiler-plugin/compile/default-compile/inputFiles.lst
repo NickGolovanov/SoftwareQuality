@@ -1,5 +1,6 @@
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/AboutBox.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/BitmapItem.java
+/Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/ErrorMessage.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/JabberPoint.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/Slide.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/SlideItem.java
@@ -13,7 +14,6 @@
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/command/buttons/About.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/command/buttons/Exit.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/command/buttons/GoTo.java
-/Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/command/buttons/Help.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/command/buttons/New.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/command/buttons/Next.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/command/buttons/Open.java
@@ -26,7 +26,13 @@
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/factorymethod/XMLAccessor.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/factorymethod/XMLAccessorCreator.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/factorymethod/XmlAttributes.java
+/Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/ApplicationExit.java
+/Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/Observable.java
+/Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/ObservableSupport.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/Observer.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/Presentation.java
+/Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/PresentationControl.java
+/Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/SlideManagement.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/SlideViewerComponent.java
 /Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/SlideViewerFrame.java
+/Users/viktorharhat/Documents/rogram/uni/SoftwareQuality/src/nhl/stenden/observer/SystemApplicationExit.java

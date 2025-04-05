@@ -13,6 +13,15 @@ import java.text.AttributedString;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * TextItem class for handling text content in slides.
+ * 
+ * SOLID Principles Implementation:
+ * - Single Responsibility Principle (SRP): Handles only text-specific slide item functionality
+ * - Liskov Substitution Principle (LSP): Properly implements all SlideItem abstract methods
+ * - Open-Closed Principle (OCP): Can be extended for specialized text items without modification
+ * - Interface Segregation Principle (ISP): Implements only the methods it needs from SlideItem
+ */
 public class TextItem extends SlideItem
 {
     private String text;

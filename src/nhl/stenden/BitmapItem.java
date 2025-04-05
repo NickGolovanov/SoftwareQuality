@@ -12,13 +12,14 @@ import java.io.IOException;
 
 
 /**
- * <p>De klasse voor een Bitmap item</p>
- * <p>Bitmap items have the responsibility to draw themselves.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
+ * BitmapItem class for handling image content in slides.
+ * 
+ * SOLID Principles Implementation:
+ * - Single Responsibility Principle (SRP): Handles only image-specific slide item functionality
+ * - Liskov Substitution Principle (LSP): Properly implements all SlideItem abstract methods
+ * - Open-Closed Principle (OCP): Can be extended for specialized image items without modification
+ * - Interface Segregation Principle (ISP): Implements only the methods it needs from SlideItem
  */
-
 public class BitmapItem extends SlideItem
 {
     private BufferedImage bufferedImage;

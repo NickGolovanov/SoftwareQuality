@@ -1,7 +1,6 @@
 package nhl.stenden.factorymethod;
 
 import java.util.List;
-import java.util.Vector;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,12 +20,14 @@ import org.w3c.dom.NodeList;
 
 
 /**
- * XMLAccessor, reads and writes XML files
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
+ * XMLAccessor class for handling XML file operations.
+ * 
+ * SOLID Principles Implementation:
+ * - Single Responsibility Principle (SRP): Handles only XML file reading/writing operations
+ * - Liskov Substitution Principle (LSP): Properly implements Accessor interface contract
+ * - Open-Closed Principle (OCP): Can be extended for different XML formats without modification
+ * - Dependency Inversion Principle (DIP): Implements abstract Accessor interface
  */
-
 public class XMLAccessor extends Accessor
 {
     /**
